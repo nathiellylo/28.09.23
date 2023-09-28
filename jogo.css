@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #0074e4;
+    color: #fff;
+   
+}
+h1 {
+    margin-top: 20px;
+}
+.container {
+    margin: 20px;
+}
+input[type="text"] {
+    width: 200px;
+}
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+#tempoRestante {
+    font-size: 30px;
+    color: #fff;
+}
+.pentagon {
+    position: relative;
+    width: 120px;
+    height: 100px;
+    margin: 0 auto;
+    background-color: purple;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+.pentagon-letter {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    font-size: 24px;
+    color: #fff;
+}
+.categorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: purple;
+    padding: 10px;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 10px;
+}
+.categoria {
+    margin: 10px;
+    text-align: center;
+}
+.categoria input[type="text"] {
+    width: 100px;
+    background-color: #fff;
+}

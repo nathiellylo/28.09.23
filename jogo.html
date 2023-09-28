@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Stop</title>
+    <link rel="stylesheet" type="text/css" href="jogo.css">
+
+</head>
+<body>
+    <h1>Jogo Stop</h1>
+    <div class="container">
+        <button onclick="iniciarJogo()">Iniciar Jogo</button>
+        <h2>Letra: <span id="letra"></span></h2>
+        <div id="tempoRestante">Tempo Restante: 60</div>
+        <div class="pentagon">
+            <div class="pentagon-letter" id="letraPentagon"></div>
+        </div>
+        <div class="categorias">
+            <div class="categoria">Nome Masculino: <input type="text" id="nomeMasculino"></div>
+            <div class="categoria">Animal: <input type="text" id="animal"></div>
+            <div class="categoria">Fruta: <input type="text" id="fruta"></div>
+            <div class="categoria">CEP: <input type="text" id="cep"></div>
+            <div class="categoria">Séries: <input type="text" id="series"></div>
+            <div class="categoria">Personagem Fictício: <input type="text" id="personagem"></div>
+            <div class="categoria">Artista: <input type="text" id="artista"></div>
+            <div class="categoria">Nome Feminino: <input type="text" id="nomeFeminino"></div>
+            <div class="categoria">Objeto: <input type="text" id="objeto"></div>
+            <div class="categoria">Adjetivo: <input type="text" id="adjetivo"></div>
+        </div>
+        <button onclick="encerrarRodada()">Encerrar Rodada</button>
+        <h2>Pontuação:</h2>
+        <p>Jogador 1: <span id="pontuacaoJogador1">0</span></p>
+        <p>Jogador 2: <span id="pontuacaoJogador2">0</span></p>
+    </div>
+    <script>
+        const categorias = ["nomeMasculino", "animal", "fruta", "cep", "series", "personagem", "artista", "nomeFeminino", "objeto", "adjetivo"];
+        let letra, tempoRestante, jogadorAtual, pontuacaoJogador1, pontuacaoJogador2, interval;
+
+        function iniciarJogo() {
+            letra = gerarLetraAleatoria();
+            tempoRestante = 60;
+            jogadorAtual = 1;
+            pontuacaoJogador1 = 0;
+            pontuacaoJogador2 = 0;
+            atualizarDisplay();
+            atualizarTempoRestante();
+        }
+
+        function gerarLetraAleatoria() {
+            const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return alfabeto.charAt(Math.floor(Math.random() * alfabeto.length));
+        }
+
+        function atualizarDisplay() {
+            document.getElementById("letra").textContent = letra;
+            document.getElementById("letraPentagon").textContent = letra;
+        }
+
+        function atualizarTempoRestante() {
+            document.getElementById("tempoRestante").textContent = `Tempo Restante: ${tempoRestante}`;
+            if (tempoRestante === 0) {
+                encerrarRodada();
+            } else {
+                tempoRestante--;
+                interval = setTimeout(atualizarTempoRestante, 1000);
+            }
+        }
+
+        function encerrarRodada() {
+            clearTimeout(interval);
+            const categoriaInputs = categorias.map(categoria => document.getElementById(categoria));
+            const respostas = categoriaInputs.map(input => input.value.trim().toUpperCase());
+
+            if (respostas.every(resposta => resposta.startsWith(letra))) {
+                if (jogadorAtual === 1) {
+                    pontuacaoJogador1++;
+                } else {
+                    pontuacaoJogador2++;
+                }
+            }
+
+            jogadorAtual = 3 - jogadorAtual; // Alternar entre jogador 1 e jogador 2
+
+            document.getElementById("pontuacaoJogador1").textContent = pontuacaoJogador1;
+            document.getElementById("pontuacaoJogador2").textContent = pontuacaoJogador2;
+
+            letra = gerarLetraAleatoria();
+            atualizarDisplay();
+
+            categoriaInputs.forEach(input => input.value = "");
+            tempoRestante = 60;
+            atualizarTempoRestante();
+        }
+    </script>
+</body>
+</html>
